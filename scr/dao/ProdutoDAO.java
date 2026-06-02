@@ -144,5 +144,9 @@ public class ProdutoDAO {
                 System.out.println("[ProdutoDAO] Linha ignorada: " + linha + " | Motivo: " + e.getMessage());
             }
         }
+
+        // Atualiza o contador estático para evitar conflito de IDs
+        int maxId = produtos.stream().mapToInt(Produto::getId).max().orElse(0);
+        Produto.setContador(maxId + 1);
     }
 }
