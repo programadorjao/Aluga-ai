@@ -1,6 +1,7 @@
 package dao;
 
 import exception.ArquivoException;
+import exception.UsuarioNaoEncontradoException;
 import model.Aluguel;
 import model.Produto;
 import model.Usuario;
@@ -110,6 +111,8 @@ public class AluguelDAO {
                 a.setStatus(status); // restaura o status salvo
                 alugueis.add(a);
 
+            } catch (UsuarioNaoEncontradoException e) {
+                System.out.println("[AluguelDAO] Aluguel ignorado (usuário não encontrado): " + linha + " | Motivo: " + e.getMessage());
             } catch (Exception e) {
                 System.out.println("[AluguelDAO] Linha ignorada: " + linha + " | Motivo: " + e.getMessage());
             }
