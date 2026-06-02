@@ -41,7 +41,7 @@ public class AluguelDAO {
 
     public void salvar() throws ArquivoException {
         List<String> linhas = new ArrayList<>();
-        for (Aluguel a : alugueis) {
+        for (Aluguel a : alugueis) { 
             // Formato: idProduto;idCliente;status
             String linha = a.getProduto().getId() + ";" + a.getCliente().getId()
                     + ";" + a.getStatus();

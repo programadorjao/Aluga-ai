@@ -35,10 +35,7 @@ public class Usuario {
         this.telefone = novoTelefone;
     }
 
-    /**
-     * Altera a senha do usuário.
-     * @throws SenhaIncorretaException se a senha atual não conferir
-     */
+
     public void alterarSenha(String atual, String nova) throws SenhaIncorretaException {
         if (!this.senha.equals(atual)) {
             throw new SenhaIncorretaException();
