@@ -21,12 +21,9 @@ public class Aluguel {
         this.dono    = dono;
     }
 
-    /**
-     * Solicita o aluguel verificando disponibilidade.
-     * @throws ProdutoIndisponivelException se o produto não estiver disponível
-     */
+   
     public void solicitarAluguel() throws ProdutoIndisponivelException {
-        produto.verificarDisponibilidade(); // lança exceção se indisponível
+        produto.verificarDisponibilidade(); 
         this.status = "Pendente";
     }
 

@@ -10,32 +10,13 @@ import util.FileManager;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * DAO (Data Access Object) da entidade Produto.
- *
- * Responsabilidades:
- * - Manter a lista de produtos em memória.
- * - Persistir e recuperar produtos no arquivo "produtos.csv".
- * - Oferecer operações de CRUD.
- *
- * Formato do arquivo produtos.csv:
- *   id;nome;descricao;precoPorDia;disponibilidade;nomeCategoria
- */
+
 public class ProdutoDAO {
 
     private static final String ARQUIVO = "produtos.csv";
     private List<Produto> produtos = new ArrayList<>();
 
-    // -------------------------------------------------------------------------
-    // CRUD
-    // -------------------------------------------------------------------------
 
-    /**
-     * Adiciona um produto validado à lista e persiste.
-     *
-     * @throws CadastroInvalidoException se nome ou preço forem inválidos
-     * @throws ArquivoException          se não for possível salvar
-     */
     public void adicionar(Produto produto) throws CadastroInvalidoException, ArquivoException {
         if (produto.getNome() == null || produto.getNome().trim().isEmpty()) {
             throw new CadastroInvalidoException("Nome do produto");
@@ -48,16 +29,12 @@ public class ProdutoDAO {
         salvar();
     }
 
-    /**
-     * Retorna cópia da lista de produtos.
-     */
+
     public List<Produto> listarTodos() {
         return new ArrayList<>(produtos);
     }
 
-    /**
-     * Busca produto pelo ID. Retorna null se não encontrado.
-     */
+
     public Produto buscarPorId(int id) {
         for (Produto p : produtos) {
             if (p.getId() == id) return p;
@@ -65,9 +42,7 @@ public class ProdutoDAO {
         return null;
     }
 
-    /**
-     * Retorna somente os produtos com disponibilidade = true.
-     */
+
     public List<Produto> listarDisponiveis() {
         List<Produto> disponiveis = new ArrayList<>();
         for (Produto p : produtos) {
@@ -76,32 +51,18 @@ public class ProdutoDAO {
         return disponiveis;
     }
 
-    /**
-     * Persiste as alterações de um produto já existente na lista.
-     *
-     * @throws ArquivoException se não for possível salvar
-     */
+
     public void atualizar(Produto produto) throws ArquivoException {
         salvar();
     }
 
-    /**
-     * Remove um produto pelo ID e persiste.
-     *
-     * @throws ArquivoException se não for possível salvar
-     */
+
     public void remover(int id) throws ArquivoException {
         produtos.removeIf(p -> p.getId() == id);
         salvar();
     }
 
-    // -------------------------------------------------------------------------
-    // Persistência (arquivo)
-    // -------------------------------------------------------------------------
 
-    /**
-     * Serializa a lista de produtos e grava no arquivo CSV.
-     */
     public void salvar() throws ArquivoException {
         List<String> linhas = new ArrayList<>();
         for (Produto p : produtos) {
@@ -114,10 +75,7 @@ public class ProdutoDAO {
         FileManager.escrever(ARQUIVO, linhas);
     }
 
-    /**
-     * Lê o arquivo CSV e recarrega a lista de produtos em memória.
-     * Precisa do CategoriaService para reconstruir as referências de Categoria.
-     */
+
     public void carregar(CategoriaService categoriaService) throws ArquivoException {
         List<String> linhas = FileManager.ler(ARQUIVO);
         produtos.clear();

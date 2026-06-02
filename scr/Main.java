@@ -12,14 +12,14 @@ public class Main {
 
         Scanner input = new Scanner(System.in);
 
-        // ---- Instâncias dos DAOs ----
+
         UsuarioDAO usuarioDAO = new UsuarioDAO();
         ProdutoDAO produtoDAO = new ProdutoDAO();
         AluguelDAO aluguelDAO = new AluguelDAO();
 
         CategoriaService categoriaService = new CategoriaService();
 
-        // ---- Categorias padrão ----
+        
         categoriaService.adicionarCategoria("Automóveis");
         categoriaService.adicionarCategoria("Imóveis");
         categoriaService.adicionarCategoria("Casa e Decoração");
@@ -33,7 +33,7 @@ public class Main {
         categoriaService.adicionarCategoria("Agro");
         categoriaService.adicionarCategoria("Serviços");
 
-        // ---- Carrega dados persistidos ao iniciar ----
+        
         System.out.println("\n[Sistema] Carregando dados salvos...");
         try {
             usuarioDAO.carregar();
@@ -41,7 +41,6 @@ public class Main {
             aluguelDAO.carregar(produtoDAO, usuarioDAO);
             System.out.println("[Sistema] Dados carregados com sucesso!\n");
         } catch (ArquivoException e) {
-            // Não impede o sistema de rodar; apenas avisa o problema
             System.out.println("[AVISO] Não foi possível carregar dados anteriores: " + e.getMessage());
         }
 
@@ -73,9 +72,6 @@ public class Main {
 
             switch (opcao) {
 
-                // -------------------------------------------------------
-                // CASE 1 - Cadastrar Usuário
-                // -------------------------------------------------------
                 case 1:
                     System.out.println("\n--- Cadastro de Usuário ---");
                     System.out.print("Nome: ");
@@ -89,7 +85,7 @@ public class Main {
 
                     try {
                         Usuario novoUsuario = new Usuario(nome, email, senha, telefone);
-                        usuarioDAO.adicionar(novoUsuario); // lança CadastroInvalidoException ou ArquivoException
+                        usuarioDAO.adicionar(novoUsuario); 
                         System.out.println("Usuário \"" + nome + "\" cadastrado com sucesso!");
                     } catch (CadastroInvalidoException e) {
                         System.out.println("Erro de cadastro: " + e.getMessage());
@@ -100,9 +96,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 2 - Login
-                // -------------------------------------------------------
                 case 2:
                     System.out.println("\n--- Login ---");
                     System.out.print("E-mail: ");
@@ -111,7 +104,7 @@ public class Main {
                     String senhaLogin = input.nextLine();
 
                     try {
-                        Usuario candidato = usuarioDAO.buscarPorEmail(emailLogin); // UsuarioNaoEncontradoException
+                        Usuario candidato = usuarioDAO.buscarPorEmail(emailLogin); 
                         if (!candidato.login(emailLogin, senhaLogin)) {
                             throw new SenhaIncorretaException();
                         }
@@ -124,9 +117,7 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 3 - Anunciar Produto
-                // -------------------------------------------------------
+
                 case 3:
                     if (usuarioLogado == null) {
                         System.out.println("Você precisa fazer login primeiro.");
@@ -167,9 +158,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 4 - Ver Produtos Disponíveis
-                // -------------------------------------------------------
                 case 4:
                     System.out.println("\n--- Produtos Disponíveis ---");
                     List<Produto> disponiveis = produtoDAO.listarDisponiveis();
@@ -187,9 +175,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 5 - Alugar Produto
-                // -------------------------------------------------------
                 case 5:
                     if (usuarioLogado == null) {
                         System.out.println("Você precisa fazer login primeiro.");
@@ -224,9 +209,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 6 - Gerenciar Aluguéis
-                // -------------------------------------------------------
                 case 6:
                     if (usuarioLogado == null) {
                         System.out.println("Você precisa fazer login primeiro.");
@@ -288,9 +270,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 7 - Editar Meus Dados
-                // -------------------------------------------------------
                 case 7:
                     if (usuarioLogado == null) {
                         System.out.println("Você precisa fazer login primeiro.");
@@ -340,9 +319,6 @@ public class Main {
                     }
                     break;
 
-                // -------------------------------------------------------
-                // CASE 8 - Categorias
-                // -------------------------------------------------------
                 case 8:
                     System.out.println("\n--- Categorias ---");
                     System.out.println("1 - Adicionar categoria");
